@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>4人ゴルフ チーム戦スコア</title>
+<style>
+  :root{--bg:#f6f8fb;--card:#fff;--line:#d9e2ef;--head:#eaf0f7;--text:#172033;--muted:#667085;--green:#07865d;--blue:#2563eb;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text);font-size:16px;padding-bottom:92px}
+  header{position:sticky;top:0;background:linear-gradient(180deg,#fff,#f7f9fc);border-bottom:1px solid var(--line);z-index:5;padding:12px 14px}
+  h1{font-size:20px;margin:0 0 8px;font-weight:800}.sub{font-size:13px;color:var(--muted)}
+  .wrap{max-width:1280px;margin:0 auto;padding:12px}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px;box-shadow:0 2px 10px rgba(16,24,40,.04)}
+  .grid{display:grid;grid-template-columns:repeat(4,minmax(130px,1fr));gap:10px}.field label{font-size:12px;color:var(--muted);display:block;margin-bottom:4px}.field input,.field select{width:100%;height:40px;border:1px solid var(--line);border-radius:10px;padding:0 10px;font-size:16px;background:#fff;color:var(--text)}
+  .controls{display:grid;grid-template-columns:repeat(4,minmax(170px,1fr));gap:10px;align-items:end}.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.btn{border:0;border-radius:10px;padding:10px 13px;font-weight:700;background:#eef4ff;color:#1849a9;cursor:pointer}.btn.primary{background:#0b7a55;color:white}.btn.warn{background:#fff1f3;color:#b42318}
+  .table-wrap{overflow-x:hidden;border:1px solid var(--line);border-radius:14px;background:#fff}.score-table{border-collapse:separate;border-spacing:0;width:100%;table-layout:fixed}.score-table th{background:var(--head);font-weight:800;text-align:center;padding:7px 3px;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:2;font-size:14px}.score-table td{border-bottom:1px solid var(--line);padding:7px 3px;text-align:center;vertical-align:middle}.score-table tr:nth-child(even) td{background:#fbfdff}.score-table .h{font-weight:800;width:32px}.score-table .par{width:54px}.player-cell{width:90px;min-width:0}.num{width:50px;height:36px;border:1px solid var(--line);border-radius:12px;text-align:center;font-size:20px;background:white}.par-input{width:48px}.medal-select{display:block;margin:5px auto 0;width:54px;min-width:54px;max-width:54px;height:30px;font-size:16px;font-weight:800;text-align:center;padding:1px 14px 1px 2px;overflow:hidden;white-space:nowrap;border:1px solid var(--line);border-radius:7px;background:#fff;-webkit-appearance:menulist;appearance:menulist}.near-cell{width:82px;min-width:0}.near-label{font-size:11px;color:var(--muted);font-weight:800;margin-bottom:2px}.near-select{width:68px;height:30px;border:1px solid var(--line);border-radius:7px;background:#fff;font-size:12px}.team-box{font-weight:800;line-height:1.25;width:118px;font-size:13px}.result{width:190px}.winner{color:var(--green);font-weight:900;font-size:14px}.pts{font-size:15px;font-weight:900;margin-top:2px}.detail{font-size:11px;color:var(--muted);margin-top:2px;white-space:normal;line-height:1.25;word-break:keep-all}.detail-main,.bonus-line{white-space:nowrap}.bonus-lines{display:flex;flex-direction:column;align-items:center;gap:1px}.carry{width:50px;font-weight:800;font-size:13px}.rankbar{position:fixed;left:0;right:0;bottom:0;background:#ffffff;border-top:1px solid var(--line);box-shadow:0 -4px 14px rgba(16,24,40,.08);z-index:10;padding:10px 12px}.rankinner{max-width:1280px;margin:0 auto;display:flex;gap:10px;align-items:center;overflow:auto}.rank-title{font-weight:900;white-space:nowrap}.rank-item{white-space:nowrap;background:#f2f6fb;border:1px solid var(--line);border-radius:999px;padding:8px 12px;font-weight:800}.rank-item.top{background:#ecfdf3;color:#067647}.note{font-size:13px;color:var(--muted);line-height:1.6}.small{font-size:12px;color:var(--muted)}.initial-rank{display:grid;grid-template-columns:repeat(4,minmax(120px,1fr));gap:8px;margin-top:10px;padding:10px;border:1px solid var(--line);border-radius:12px;background:#fbfdff}.initial-rank-title{font-weight:900;margin-top:10px}.initial-rank select{height:36px;border:1px solid var(--line);border-radius:9px;background:#fff;font-size:15px;padding:0 8px;width:100%}
+  @media(max-width:760px){body{font-size:13px}.grid,.controls,.initial-rank{grid-template-columns:1fr 1fr}.wrap{padding:6px}.card{padding:9px}.score-table th{font-size:12px;padding:6px 2px}.score-table td{padding:6px 2px}.score-table .h{width:28px}.score-table .par{width:48px}.player-cell{width:76px}.num{width:44px;height:34px;font-size:18px}.par-input{width:42px}.medal-select{width:48px;min-width:48px;max-width:48px;font-size:15px;padding-right:12px}.near-cell{width:66px}.near-select{width:58px;font-size:11px}.team-box{width:92px;font-size:11px}.result{width:145px}.winner{font-size:12px}.pts{font-size:13px}.detail{font-size:10px}.detail-main,.bonus-line{white-space:nowrap}.carry{width:40px}}
+</style>
+</head>
+<body>
+<header><h1>4人ゴルフ・チーム戦スコア</h1><div class="sub">チーム分け＝実打数のみ／勝敗判定＝ハンデ込み／メダル・ニアピン＝勝敗とは別にチーム加算</div></header>
+<div class="wrap">
+  <section class="card">
+    <div class="grid" id="playerSettings"></div>
+    <div class="controls" style="margin-top:12px">
+      <div class="field"><label>チーム分けパターン</label><select id="pattern"><option value="fixed">① 1-4 と 2-3 固定</option><option value="rotate">② ローテ：1-4 → 1-3 → 1-2</option></select></div>
+      <div class="field"><label>勝利点</label><input type="number" id="winPoint" value="3" min="0"></div>
+      <div class="field"><label>前半/後半</label><select id="half"><option value="all">18Hすべて</option><option value="front">前半 1-9H</option><option value="back">後半 10-18H</option></select></div>
+      <div class="field"><label>ニアピン点</label><input type="number" id="nearPinPoint" value="3" min="0"></div>
+    </div>
+    <div class="initial-rank-title">1Hの初期順位（チーム分け用）</div>
+    <div class="initial-rank" id="initialRankBox"></div>
+    <div class="btns">
+      <button class="btn primary" onclick="recalcAndRender()">チーム分け更新・再計算</button>
+      <button class="btn" onclick="saveLocal()">保存</button>
+      <button class="btn" onclick="loadLocal()">読込</button>
+      <button class="btn" onclick="downloadCSV()">CSV出力</button>
+      <button class="btn warn" onclick="clearAll()">全消去</button>
+    </div>
+    <div class="note" style="margin-top:8px">チーム分け順位は、前ホールの<strong>実打数</strong>が少ない順。同打数ならさらに前のホールへさかのぼります。ハンデ・メダル・ニアピンはチーム分けに使いません。</div>
+  </section>
+  <section class="table-wrap"><table class="score-table"><thead id="thead"></thead><tbody id="tbody"></tbody></table></section>
+</div>
+<div class="rankbar"><div class="rankinner" id="rankbar"><span class="rank-title">現在得点</span></div></div>
+<script>
+const defaultNames=['辰巳','三宅','松岡','宝達'];
+const medals=[{v:0,t:'－'},{v:1,t:'⚙1'},{v:2,t:'🥉2'},{v:3,t:'🥈3'},{v:4,t:'🥇4'},{v:5,t:'💎5'}];
+const handicapOptions=[['none','なし'],['all','毎H -1'],['even','偶数H -1'],['third','3の倍数H -1']];
+let state={names:[...defaultNames],handicaps:['none','none','none','none'],pars:Array(18).fill(4),scores:Array.from({length:18},()=>Array(4).fill('')),medals:Array.from({length:18},()=>Array(4).fill(0)),nearPins:Array(18).fill('none'),initialRank:[0,1,2,3]};
+function el(id){return document.getElementById(id)}
+function init(){renderSettings();renderHead();renderBody();attachGlobal();recalcAndRender()}
+function renderSettings(){const box=el('playerSettings');box.innerHTML='';state.names.forEach((n,i)=>{const d=document.createElement('div');d.className='field';d.innerHTML=`<label>プレーヤー${i+1}</label><input value="${esc(n)}" data-name="${i}"><select data-handicap="${i}" style="margin-top:6px">${handicapOptions.map(([v,t])=>`<option value="${v}" ${state.handicaps[i]===v?'selected':''}>ハンデ：${t}</option>`).join('')}</select>`;box.appendChild(d)});renderInitialRank()}
+function renderInitialRank(){const box=el('initialRankBox');if(!box)return;box.innerHTML='';const used=new Set();state.initialRank=normalizeInitialRank(state.initialRank);for(let r=0;r<4;r++){const d=document.createElement('div');d.className='field';d.innerHTML=`<label>${r+1}位</label><select data-initial-rank="${r}">${state.names.map((n,i)=>`<option value="${i}" ${state.initialRank[r]===i?'selected':''}>${esc(n)}</option>`).join('')}</select>`;box.appendChild(d)}}
+function renderHead(){el('thead').innerHTML=`<tr><th>H</th><th>Par</th>${state.names.map(n=>`<th class="player-cell">${esc(n)}</th>`).join('')}<th class="near-cell">ニアピン</th><th>チーム</th><th>勝敗/点</th><th>持越</th></tr>`}
+function visibleHoles(){const h=el('half')?.value||'all';return [...Array(18).keys()].filter(i=>h==='front'?i<9:h==='back'?i>=9:true)}
+function normalizeInitialRank(rank){let arr=Array.isArray(rank)?rank.map(Number):[];let out=[];for(const v of arr){if(Number.isInteger(v)&&v>=0&&v<4&&!out.includes(v))out.push(v)}for(let i=0;i<4;i++){if(!out.includes(i))out.push(i)}return out.slice(0,4)}
+function renderBody(){const body=el('tbody');body.innerHTML='';for(const h of visibleHoles()){const tr=document.createElement('tr');tr.innerHTML=`<td class="h">${h+1}</td><td class="par"><input class="num par-input" type="number" min="3" max="6" value="${state.pars[h]}" data-par="${h}"></td>`+state.names.map((n,p)=>`<td class="player-cell"><input class="num" type="number" min="1" value="${state.scores[h][p]}" data-score="${h}-${p}"><select class="medal-select" data-medal="${h}-${p}">${medals.map(m=>`<option value="${m.v}" ${Number(state.medals[h][p])===m.v?'selected':''}>${m.t}</option>`).join('')}</select></td>`).join('')+`<td class="near-cell" id="nearpin-${h}"></td><td class="team-box" id="team-${h}"></td><td class="result" id="result-${h}"></td><td class="carry" id="carry-${h}"></td>`;body.appendChild(tr)} }
+function attachGlobal(){document.addEventListener('input',e=>{const t=e.target;if(t.dataset.name!==undefined){state.names[+t.dataset.name]=t.value||`P${+t.dataset.name+1}`;renderHead();renderInitialRank();recalcAndRender(false)}if(t.dataset.par!==undefined){state.pars[+t.dataset.par]=Number(t.value)||4;recalcAndRender(false)}if(t.dataset.score){const [h,p]=t.dataset.score.split('-').map(Number);state.scores[h][p]=t.value===''?'':Number(t.value);recalcAndRender(false)}if(t.id==='winPoint'||t.id==='nearPinPoint')recalcAndRender(false)});document.addEventListener('change',e=>{const t=e.target;if(t.dataset.handicap!==undefined){state.handicaps[+t.dataset.handicap]=t.value;recalcAndRender(false)}if(t.dataset.initialRank!==undefined){setInitialRank(+t.dataset.initialRank,+t.value);renderInitialRank();recalcAndRender(false)}if(t.dataset.medal){const [h,p]=t.dataset.medal.split('-').map(Number);state.medals[h][p]=Number(t.value)||0;recalcAndRender(false)}if(t.dataset.nearpin!==undefined){state.nearPins[+t.dataset.nearpin]=t.value;recalcAndRender(false)}if(t.id==='pattern'||t.id==='half'){renderBody();recalcAndRender(false)}})}
+function setInitialRank(pos,player){state.initialRank=normalizeInitialRank(state.initialRank);const old=state.initialRank[pos];const dup=state.initialRank.indexOf(player);state.initialRank[pos]=player;if(dup!==-1&&dup!==pos)state.initialRank[dup]=old;state.initialRank=normalizeInitialRank(state.initialRank)}
+function scoreNum(h,p){const v=state.scores[h][p];return v===''||v==null?null:Number(v)}
+function handicapStroke(h,p){const opt=state.handicaps[p];const hole=h+1;if(opt==='all')return 1;if(opt==='even'&&hole%2===0)return 1;if(opt==='third'&&hole%3===0)return 1;return 0}
+// チーム分け順位：実打数のみ。ハンデ・メダル・ニアピンは使わない。
+function rankingForHole(h){if(h===0)return normalizeInitialRank(state.initialRank);let players=[0,1,2,3];players.sort((a,b)=>compareByActualScores(a,b,h));return players}
+function compareByActualScores(a,b,h){for(let k=h-1;k>=0;k--){const sa=scoreNum(k,a), sb=scoreNum(k,b);if(sa!=null&&sb!=null&&sa!==sb)return sa-sb;if(sa!=null&&sb==null)return -1;if(sa==null&&sb!=null)return 1}return a-b}
+function teamsForHole(h){const rank=rankingForHole(h);let pair;if((el('pattern')?.value||'fixed')==='fixed'){pair=[[rank[0],rank[3]],[rank[1],rank[2]]]}else{const r=h%3;if(r===0)pair=[[rank[0],rank[3]],[rank[1],rank[2]]];else if(r===1)pair=[[rank[0],rank[2]],[rank[1],rank[3]]];else pair=[[rank[0],rank[1]],[rank[2],rank[3]]] }return pair}
+function recalcAndRender(rebuild=true){if(rebuild){renderSettings();renderHead();renderBody()}let total=Array(4).fill(0);let carry=0;let summaries=[];for(let h=0;h<18;h++){const teams=teamsForHole(h);const s=calcHole(h,teams,carry);summaries[h]=s;if(s.gameDraw){carry += Number(el('winPoint')?.value||3)}else{carry=0}s.points.forEach((pt,i)=>total[i]+=pt)}for(const h of visibleHoles()) paintHole(h,summaries[h]);paintRanks(total)}
+function calcHole(h,teams,carryIn){const winBase=Number(el('winPoint')?.value||3);const nearBase=Number(el('nearPinPoint')?.value||3);const points=Array(4).fill(0);const teamNames=teams.map(t=>t.map(i=>state.names[i]).join('・'));
+  const teamNet=teams.map(t=>t.reduce((sum,p)=>{const s=scoreNum(h,p);return sum+(s==null?999:s-handicapStroke(h,p))},0));
+  const allEntered=teams.flat().every(p=>scoreNum(h,p)!=null);let winner=-1,gamePoint=0,gameDraw=false;
+  if(allEntered){if(teamNet[0]<teamNet[1])winner=0;else if(teamNet[1]<teamNet[0])winner=1;else gameDraw=true;if(winner>=0){gamePoint=winBase+carryIn;teams[winner].forEach(p=>points[p]+=gamePoint)}}
+  // メダル点：勝敗とは別。獲得者の所属チーム2人に加算。
+  let medalDetails=[];let teamBonus=[0,0];
+  for(let p=0;p<4;p++){const m=Number(state.medals[h][p])||0;if(m>0){const ti=teams.findIndex(t=>t.includes(p));teams[ti].forEach(member=>points[member]+=m);teamBonus[ti]+=m;medalDetails.push(`${state.names[p]}${m}`)}}
+  // ニアピン：Par3のみ。勝敗とは別。獲得者の所属チーム2人に加算。
+  let npPlayer=state.nearPins[h];let npPoint=0;if(Number(state.pars[h])===3 && npPlayer!=='none'){const p=Number(npPlayer);const ti=teams.findIndex(t=>t.includes(p));if(ti>=0){npPoint=nearBase;teamBonus[ti]+=nearBase;teams[ti].forEach(member=>points[member]+=nearBase)}}
+  // 最終ホールで引き分け持ち越し終了なら、勝敗点は両者なし。carry表示だけ残す。
+  return {teams,teamNames,teamNet,winner,gamePoint,gameDraw,carryIn,carryOut:gameDraw?carryIn+winBase:0,points,teamBonus,medalDetails,npPlayer,npPoint,allEntered};}
+function paintHole(h,s){const teamEl=el(`team-${h}`), resEl=el(`result-${h}`), carryEl=el(`carry-${h}`), nearEl=el(`nearpin-${h}`);if(!teamEl)return;teamEl.innerHTML=`${s.teamNames[0]}<br>vs<br>${s.teamNames[1]}`;
+  // ニアピンは元の右側専用列に表示。Par3だけ選択可能、Par4/5は非表示。
+  if(nearEl){
+    if(Number(state.pars[h])===3){
+      nearEl.innerHTML=`<div class="near-label">NP</div><select class="near-select" data-nearpin="${h}"><option value="none">なし</option>${state.names.map((n,i)=>`<option value="${i}" ${String(state.nearPins[h])===String(i)?'selected':''}>${esc(n)}</option>`).join('')}</select>`;
+    }else{
+      state.nearPins[h]='none';
+      nearEl.innerHTML='<span class="small">-</span>';
+    }
+  }
+  if(!s.allEntered){resEl.innerHTML='<span class="small">入力待ち</span>';carryEl.textContent=s.carryIn||'-';return}
+  const detail=`<div class="detail-main">判定 ${s.teamNet[0]}-${s.teamNet[1]} ｜ 勝敗${s.gamePoint||0}</div><div class="bonus-lines"><div class="bonus-line">${s.teamNames[0]} メダル/NP +${s.teamBonus[0]}</div><div class="bonus-line">${s.teamNames[1]} メダル/NP +${s.teamBonus[1]}</div></div>`;
+  if(s.winner>=0){resEl.innerHTML=`<div class="winner">${s.teamNames[s.winner]} 勝ち</div><div class="pts">勝ちチーム +${s.gamePoint}点</div><div class="detail">${detail}</div>`}else{resEl.innerHTML=`<div class="winner" style="color:#667085">引き分け・持越</div><div class="pts">勝敗点なし</div><div class="detail">${detail}</div>`}
+  carryEl.textContent=s.gameDraw?s.carryOut:(s.carryIn?s.carryIn+'→0':'0')}
+function paintRanks(total){const order=[0,1,2,3].sort((a,b)=>total[b]-total[a]);el('rankbar').innerHTML='<span class="rank-title">現在得点</span>'+order.map((p,i)=>`<span class="rank-item ${i===0?'top':''}">${i+1}位 ${esc(state.names[p])} ${total[p]}点</span>`).join('')}
+function saveLocal(){localStorage.setItem('golfTeamScoreApp',JSON.stringify({state,pattern:el('pattern').value,winPoint:el('winPoint').value,nearPinPoint:el('nearPinPoint').value}));alert('保存しました')}
+function loadLocal(){const raw=localStorage.getItem('golfTeamScoreApp');if(!raw)return alert('保存データがありません');const d=JSON.parse(raw);state=Object.assign(state,d.state);state.initialRank=normalizeInitialRank(state.initialRank);el('pattern').value=d.pattern||'fixed';el('winPoint').value=d.winPoint||3;el('nearPinPoint').value=d.nearPinPoint||3;recalcAndRender(true)}
+function clearAll(){if(!confirm('全消去しますか？'))return;state.scores=Array.from({length:18},()=>Array(4).fill(''));state.medals=Array.from({length:18},()=>Array(4).fill(0));state.nearPins=Array(18).fill('none');recalcAndRender(true)}
+function downloadCSV(){let rows=[['H','Par',...state.names.map(n=>`${n}実打数`),...state.names.map(n=>`${n}メダル`),'ニアピン','チームA','チームB','判定A','判定B']];for(let h=0;h<18;h++){const s=calcHole(h,teamsForHole(h),0);rows.push([h+1,state.pars[h],...state.scores[h],...state.medals[h],state.nearPins[h]==='none'?'':state.names[Number(state.nearPins[h])],s.teamNames[0],s.teamNames[1],s.teamNet[0],s.teamNet[1]])}const csv=rows.map(r=>r.map(v=>`"${String(v).replaceAll('"','""')}"`).join(',')).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv'}));a.download='golf_team_score.csv';a.click()}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+init();
+</script>
+</body>
+</html>
